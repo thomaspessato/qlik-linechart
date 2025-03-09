@@ -18,11 +18,16 @@ const LineChart = ({ data }) => {
       name: data.qHyperCube.qMeasureInfo[i - 1].qFallbackTitle,
       data: data.qHyperCube.qDataPages[0].qMatrix.map(row => row[i].qNum),
       type: 'line',
-      areaStyle: {},
+      label: {
+        show: data.dataPoints.show,
+      },
+      markLine: {
+        data: [
+          { type: 'max', name: 'Max' },
+        ],
+      },
     });
   }
-
-  console.log(formattedData);
 
   useEffect(() => {
     const chart = chartRef.current.getEchartsInstance();
@@ -34,11 +39,34 @@ const LineChart = ({ data }) => {
       xAxis: {
         type: 'category',
         data: formattedData.categories,
+        axisLabel: {
+          show: data.axisLabel.show, // Show x-axis labels
+        },
+        axisTick: {
+          show: data.axisTick.show, // Show x-axis tick marks
+        },
+        axisLine: {
+          show: data.axisLine.show, // Show x-axis line
+        },
+        splitLine: {
+          show: data.gridLines.show, // Show x-axis grid lines
+        },
       },
       yAxis: {
         type: 'value',
+        axisLabel: {
+          show: data.axisLabel.show, // Show y-axis labels
+        },
+        splitLine: {
+          show: data.gridLines.show, // Show x-axis grid lines
+        },
       },
-      series: series
+      series: series,
+      trendLine: {
+        data: [
+          { type: 'trend', name: 'Trend' },
+        ],
+      },
     };
 
     chart.setOption(options);
